@@ -6,6 +6,7 @@ defaults: &defaults
   working_directory: /go/src/github.com/sbagnallsta/flights-history-service-test
   docker:
     - image: circleci/golang:1.8
+    - image: mongo:3.4.4
 
 version: 2
 jobs: 
