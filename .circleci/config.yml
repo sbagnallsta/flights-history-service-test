@@ -33,13 +33,13 @@ jobs:
              mkdir -p shared-workspace
              cp -r automation-qa/flights-history-service-qa/ shared-workspace/
              cp -r profiles/ shared-workspace/
-             cp -r main shared-workspace/
+             cp -r main.go shared-workspace/
 
       - persist_to_workspace:
           root: shared-workspace
           paths: 
             - flights-history-service-qa
-            - main
+            - main.go
             - profiles
 
   test:
