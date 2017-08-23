@@ -6,7 +6,6 @@ defaults: &defaults
   working_directory: /go/src/github.com/sbagnallsta/flights-history-service-test
   docker:
     - image: circleci/golang:1.8
-    - image: openjdk:8-jdk
     - image: mongo:3.4.4
 
 version: 2
@@ -42,13 +41,12 @@ jobs:
   run_automation:
     docker:
       - image: circleci/openjdk:8-jdk
+      - image: mongo:3.4.4
 
-      steps:
-        - setup_tests
-
+    steps:
+      - setup_tests
       - attach_workspace:
           at: shared-workspace
-
       - run:
           name: Run Code
           command: |
