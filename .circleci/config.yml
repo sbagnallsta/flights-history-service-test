@@ -42,7 +42,7 @@ jobs:
             - main
             - profiles
 
-  run_automation:
+  test:
     docker:
       - image: circleci/openjdk:8-jdk
       - image: mongo:3.4.4
@@ -65,10 +65,10 @@ jobs:
 
 workflows:
   version: 2
-  build_accept_deploy:
+  build_and_test:
     jobs:
       - build:
-      - run_automation:
+      - test:
 
 # version: 2
 # jobs:
