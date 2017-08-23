@@ -27,9 +27,7 @@ dependencies:
 compile:
   override:
     - ls
-    - go run main.go:
-        background: true
-    - sleep 20
+    - go run main.go
 
 # run tests
 test:
