@@ -44,6 +44,7 @@ jobs:
 
   test:
     docker:
+      - image: circleci/golang:1.8
       - image: circleci/openjdk:8-jdk
       - image: mongo:3.4.4
 
@@ -51,7 +52,7 @@ jobs:
       - attach_workspace:
           at: shared-workspace
 
-      - run:
+     - run:
           name: Run Code
           command: |
             cp -r shared-workspace/profiles/ .
