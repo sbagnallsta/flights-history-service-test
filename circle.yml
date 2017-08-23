@@ -28,7 +28,8 @@ compile:
   override:
     - ls
     - pwd
-    - go run main.go
+    - go run main.go:
+      background: true
 
 # run tests
 test:
