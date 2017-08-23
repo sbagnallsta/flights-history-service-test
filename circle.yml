@@ -15,7 +15,8 @@ dependencies:
 
 compile: 
   override:
-    - cd src/main/ && go install && go build main.go && go run main.go: 
+    - cd src/main/ && go install && go build main.go
+    - cd src/main/ && go run main.go:
       background: true
 
 test:
