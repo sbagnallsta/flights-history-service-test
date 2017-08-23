@@ -1,0 +1,1 @@
+An application for automatically testing the JIRA service

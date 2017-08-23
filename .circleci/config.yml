@@ -1,0 +1,217 @@
+# GO CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+#
+defaults: &defaults
+  working_directory: /go/src/github.com/sbagnallsta/flights-history-service-test
+  docker:
+    - image: circleci/golang:1.8
+
+version: 2
+jobs: 
+ build:
+  <<: *defaults
+
+  steps:
+    - run:
+        name: Get Dependencies
+        command: go get -v -t -d ./...
+    - run: 
+        name: Unit and Integration Tests
+        command: go test -v ./...
+    - run:
+        name: Compile Code
+        command: go build main.go
+    - run:
+        name: Run Code
+        command: main.exe
+    - run: 
+        name: Run Auto-qa Tests
+        command: |
+          cd shared-workspace/flights-history-service-qa && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
+
+workflows:
+  version: 2
+  build_accept_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+
+# version: 2
+# jobs:
+#   build:
+
+#     <<: *defaults
+
+#     steps:
+#       - checkout
+#       - run:
+#           name: Checkout submodules
+#           command: | 
+#             git submodule sync
+#             git submodule update --init
+#             git submodule update --remote --merge
+
+#       - run: 
+#           name: Get Dependencies
+#           command: go get -v -t -d ./...
+
+#       - run: 
+#           name: Unit and Integration Tests
+#           command: go test -v ./...
+
+#       - run:
+#           name: Compile Code
+#           command: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o workdir/main . 
+
+#       - run:
+#           name: Create Shared Workspace
+#           command: |
+#             mkdir -p shared-workspace
+#             cp -r automation-qa/flights-history-service-qa/ shared-workspace/
+#             cp -r shared-resources/scripts/docker-image-tag.sh shared-workspace/
+#             cp -r Dockerfile shared-workspace/
+#             cp -r workdir/main shared-workspace/
+#             cp -r profiles/ shared-workspace/
+
+#       - persist_to_workspace:
+#           root: shared-workspace
+#           paths: 
+#             - flights-history-service-qa
+#             - docker-image-tag.sh
+#             - Dockerfile
+#             - main
+#             - profiles
+
+#   prepare_automation_qa:
+
+#     <<: *defaults
+
+#     steps:
+#       - setup_remote_docker
+
+#       - attach_workspace:
+#           at: shared-workspace
+
+#       - run:
+#           name: Build Docker image
+#           command: docker build -t statravel/flights-history-service --file shared-workspace/Dockerfile .   
+
+#       - run:
+#           name: Save Docker image layer cache
+#           command: docker save -o shared-workspace/flights-history-service-docker-image.tar statravel/flights-history-service
+
+#       - persist_to_workspace:
+#           root:  shared-workspace
+#           paths: 
+#             - flights-history-service-docker-image.tar
+
+#   automation_qa_sanity:
+
+#     docker:
+#       - image: circleci/openjdk:8-jdk
+
+#     steps:
+#       - setup_remote_docker
+
+#       - attach_workspace:
+#           at: shared-workspace
+
+#       - run:
+#           name: Load Docker image layer cache
+#           command: |
+#             seto pipefail
+#             docker load -i shared-workspace/flights-history-service-docker-image.tar | true
+
+#       - run: 
+#           name: Run Flights History Service Image
+#           command: | 
+#             docker run -d -p 3200:3200 -e FLIGHTS_HISTORY_SERVICE_PROFILE=ci statravel/flights-history-service
+#             sleep 45
+
+#       # - run:
+#       #     name: Automation Testing
+#       #     command: | 
+#       #       cd shared-workspace/flights-history-service-qa && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
+
+#   dockerhub_publish:
+#     <<: *defaults
+
+#     steps:
+#       - setup_remote_docker
+
+#       - attach_workspace:
+#           at: shared-workspace
+
+#       - run:
+#           name: Docker Publish
+#           command: |
+#             docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+#             docker push "statravel/flights-history-service:$(/bin/bash shared-workspace/docker-image-tag $DOCKER_USER $DOCKER_PASSWORD flights-history-service 1)"
+
+#   staging_deployment:
+#     <<: *defaults
+
+#     steps:
+#       - checkout
+
+#       - run:
+#           name: Checkout submodules
+#           command: |
+#             git submodule sync
+#             git submodule update --init
+#             git submodule update --remote --merge
+
+#       - run: 
+#           name: Deis Deployment
+#           command: echo "deployment"
+
+#   production_deployment:
+#     <<: *defaults
+
+#     steps:
+#       - checkout
+
+#       - run:
+#           name: Checkout submodules
+#           command: |
+#             git submodule sync
+#             git submodule update --init
+#             git submodule update --remote --merge
+
+#       - run:
+#           name: Deis Deployment
+#           command: echo "deployment"
+
+# workflows:
+#   version: 2
+#   build_accept_deploy:
+#     jobs:
+#       - build:
+#           filters:
+#             branches:
+#               only: master
+#       - prepare_automation_qa:
+#           requires:
+#             - build
+#       - automation_qa_sanity:
+#           requires:
+#             - prepare_automation_qa
+#       - dockerhub_publish:
+#           requires:
+#             - automation_qa_sanity
+#       - staging_deployment:
+#           requires:
+#             - dockerhub_publish
+#           filters:
+#             branches:
+#               only: staging
+#       - production_deployment:
+#           type: approval
+#           requires:
+#             - dockerhub_publish
+#           filters:
+#             branches:
+#               only: master

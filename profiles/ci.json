@@ -1,0 +1,8 @@
+{
+	"Port": ":3200",
+	"DataSource" : {
+		"Url": "localhost:27017",
+		"Database": "flights",
+		"Collection":"flightsHistory"
+	}
+}
