@@ -26,10 +26,8 @@ dependencies:
 # compiles the application and run flights-history-service container to execute automation tests
 compile:
   override:
-    - ls
-    - pwd
     - go run main.go:
-      background: true
+        background: true
 
 # run tests
 test:
