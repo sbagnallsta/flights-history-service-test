@@ -24,8 +24,8 @@ dependencies:
 # compiles the application and run flights-history-service container to execute automation tests
 compile:
   override:
-    - cd src/main/ && go install && go build main.go
-    - cd src/main/ && go run main.go:
+    - cd flights-history-service/main/ && go install && go build main.go
+    - cd flights-history-service/main/ && go run main.go:
         background: true
     - sleep 20
 
