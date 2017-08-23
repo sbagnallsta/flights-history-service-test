@@ -25,7 +25,7 @@ jobs:
         command: go build main.go
     - run:
         name: Run Code
-        command: main.exe
+        command: go run main.go
     - run: 
         name: Run Auto-qa Tests
         command: |
