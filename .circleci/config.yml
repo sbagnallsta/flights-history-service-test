@@ -1,27 +1,27 @@
-version: 1
-general:
-  branches:
-    only:
-      - master
+# version: 1
+# general:
+#   branches:
+#     only:
+#       - master
 
-machine:
-  java:
-    version: openjdk8
-  environment:
-    GOPATH: "${HOME}/flights-history-service"
+# machine:
+#   java:
+#     version: openjdk8
+#   environment:
+#     GOPATH: "${HOME}/flights-history-service"
 
-dependencies:
-  override:
-    - go get ./..
+# dependencies:
+#   override:
+#     - go get ./..
 
-compile: 
-  override:
-    - cd src/main/ && go install && go build main.go && go run main.go: 
-      background: true
+# compile: 
+#   override:
+#     - cd src/main/ && go install && go build main.go && go run main.go: 
+#       background: true
 
-test:
-  override:
-    - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
+# test:
+#   override:
+#     - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
 
 
 
