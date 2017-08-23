@@ -18,12 +18,15 @@ jobs:
       - run:
           name: Get Dependencies
           command: go get -v -t -d ./...
+
       - run: 
           name: Unit and Integration Tests
           command: go test -v ./...
+
       - run:
           name: Compile Code
           command: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o workdir/main .
+
       - run:
           name: Create Workspace
           command: |
@@ -31,13 +34,14 @@ jobs:
              cp -r automation-qa/flights-history-service-qa/ shared-workspace/
              cp -r profiles/ shared-workspace/
              cp -r workdir/main shared-workspace/
+
       - persist_to_workspace:
           root: shared-workspace
           paths: 
             - flights-history-service-qa
             - main
             - profiles
-  
+
   run_automation:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -46,30 +50,25 @@ jobs:
     steps:
       - attach_workspace:
           at: shared-workspace
+
       - run:
           name: Run Code
           command: |
             cp -r profiles/ /go/src/github.com/sbagnallsta/flights-history-service-test/
             main
             background: true
+
       - run: 
           name: Run Auto-qa Tests
           command: |
             cd shared-workspace/flights-history-service-qa && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
-
-
 
 workflows:
   version: 2
   build_accept_deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              only: master
       - run_automation:
-          requires:
-            - build
 
 # version: 2
 # jobs:
