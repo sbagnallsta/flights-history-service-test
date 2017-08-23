@@ -31,7 +31,7 @@ jobs:
     - run: 
         name: Run Auto-qa Tests
         command: |
-          cd shared-workspace/flights-history-service-qa && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
+          cd automation-qa/flights-history-service-qa && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
 
 workflows:
   version: 2
