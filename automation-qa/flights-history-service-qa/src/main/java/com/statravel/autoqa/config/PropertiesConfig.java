@@ -18,11 +18,11 @@ public class PropertiesConfig {
     @Value("${mongodb.host}")
     private String mongoUrl;
     
-    @Value("${mongodb.databaseName}")
-    private String mongoDatabaseName;
+    @Value("${mongodb.database}")
+    private String mongoDatabase;
     
-    @Value("${mongodb.collectionName}")
-    private String mongoCollectionName;
+    @Value("${mongodb.collection}")
+    private String mongoCollection;
   
     /**
      * 
@@ -43,15 +43,15 @@ public class PropertiesConfig {
     /**
      * @return the mongoDatabaseName
      */
-    public String getMongoDatabaseName() {
-        return mongoDatabaseName;
+    public String getMongoDatabase() {
+        return mongoDatabase;
     }
 
     /**
      * @return the mongoCollectionName
      */
-    public String getMongoCollectionName() {
-        return mongoCollectionName;
+    public String getMongoCollection() {
+        return mongoCollection;
     }
 
     /* (non-Javadoc)
@@ -59,8 +59,8 @@ public class PropertiesConfig {
      */
     @Override
     public String toString() {
-        return "PropertiesConfig [hostUrl=" + hostUrl + ", mongoUrl=" + mongoUrl + ", mongoDatabaseName="
-                + mongoDatabaseName + ", mongoCollectionName=" + mongoCollectionName + "]";
+        return "PropertiesConfig [hostUrl=" + hostUrl + ", mongoUrl=" + mongoUrl + ", mongoDatabase="
+                + mongoDatabase + ", mongoCollection=" + mongoCollection + "]";
     }
 
 }

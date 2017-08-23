@@ -83,8 +83,8 @@ public class FlightsTest {
         Boolean stored = false;
         
         MongoClient mongoClient = new MongoClient(propertiesConfig.getMongoUrl(), 27017);
-        MongoDatabase mongoDatabase = mongoClient.getDatabase(propertiesConfig.getMongoDatabaseName());
-        MongoCollection<Document> document = mongoDatabase.getCollection(propertiesConfig.getMongoCollectionName());        
+        MongoDatabase mongoDatabase = mongoClient.getDatabase(propertiesConfig.getMongoDatabase());
+        MongoCollection<Document> document = mongoDatabase.getCollection(propertiesConfig.getMongoCollection());        
         FindIterable<Document> iterable = document.find();
         
         for (Iterator<Flight> i = this.flightsAdded.iterator(); i.hasNext();) {
