@@ -53,13 +53,17 @@ jobs:
           at: shared-workspace
 
       - run:
-          name: Run Code
+          name: Dependencies
           command: |
             cp -r shared-workspace/profiles/ .
             cp -r shared-workspace/main.go . 
             go get -v -t -d ./...
+
+      - run:
+          name: Run Code
+          command: |      
             go run main.go
-            background: true
+          background: true
 
       - run: 
           name: Run Auto-qa Tests
