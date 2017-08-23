@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Run Code
           command: |
-            cp -r profiles/ /go/src/github.com/sbagnallsta/flights-history-service-test/
+            cp -r shared-workspace/profiles/ /go/src/github.com/sbagnallsta/flights-history-service-test/
             main
             background: true
 
