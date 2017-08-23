@@ -56,7 +56,7 @@ func getGoPath(profile string) string {
 
 	}
 
-	return "/src/github.com/sbagnallsta/flights-history-service-test/profiles/"
+	return "/profiles/"
 
 }
 
