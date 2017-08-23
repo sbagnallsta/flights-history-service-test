@@ -8,6 +8,8 @@ general:
 machine:
   java:
     version: openjdk8
+  environment:
+    GOPATH: "/home/ubuntu/flights-history-service-test"
 
 #checks out submodules
 # checkout:
