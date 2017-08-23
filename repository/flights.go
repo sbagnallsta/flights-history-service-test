@@ -2,8 +2,8 @@ package flights
 
 import (
 	"log"
-	"github.com/sta-travel/flights-history-service-test/models/flight"
-	"github.com/sta-travel/flights-history-service-test/models/dbConnector"
+	"github.com/sbagnallsta/flights-history-service-test/models/flight"
+	"github.com/sbagnallsta/flights-history-service-test/models/dbConnector"
 )
 
 func SaveFlight(dbConnector dbConnector.DBData, data []flight.Flight) {

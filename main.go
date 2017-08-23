@@ -5,10 +5,10 @@ import (
 	"time"
 	"gopkg.in/mgo.v2"
 	"github.com/gin-gonic/gin"
-	"github.com/sta-travel/flights-history-service-test/profiles"
-	"github.com/sta-travel/flights-history-service-test/models/dbConnector"
-	"github.com/sta-travel/flights-history-service-test/controllers/health"
-	"github.com/sta-travel/flights-history-service-test/controllers/flights"
+	"github.com/sbagnallsta/flights-history-service-test/profiles"
+	"github.com/sbagnallsta/flights-history-service-test/models/dbConnector"
+	"github.com/sbagnallsta/flights-history-service-test/controllers/health"
+	"github.com/sbagnallsta/flights-history-service-test/controllers/flights"
 )
 
 func main() {
