@@ -12,11 +12,11 @@ machine:
     GOPATH: "${HOME}/flights-history-service"
 
 #checks out submodules
-checkout:
-  post:
-    - git submodule sync
-    - git submodule update --init
-    - git submodule update --remote --merge
+# checkout:
+#   post:
+#     - git submodule sync
+#     - git submodule update --init
+#     - git submodule update --remote --merge
 
 # install dependencies
 dependencies:
