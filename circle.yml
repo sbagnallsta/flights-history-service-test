@@ -9,7 +9,7 @@ machine:
   java:
     version: openjdk8
   environment:
-    GOPATH: "${HOME}/flights-history-service"
+    GOPATH: "${HOME}/flights-history-service-test"
 
 #checks out submodules
 # checkout:
@@ -27,6 +27,7 @@ dependencies:
 compile:
   override:
     - ls
+    - pwd
     - go run main.go
 
 # run tests
