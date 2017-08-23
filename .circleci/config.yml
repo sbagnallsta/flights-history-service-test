@@ -56,7 +56,7 @@ jobs:
           name: Run Code
           command: |
             cp -r shared-workspace/profiles/ .
-            main.exe
+            go run main.go
             background: true
 
       - run: 
