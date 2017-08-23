@@ -57,6 +57,7 @@ jobs:
           command: |
             cp -r shared-workspace/profiles/ .
             cp -r shared-workspace/main.go . 
+            go get -v -t -d ./...
             go run main.go
             background: true
 
