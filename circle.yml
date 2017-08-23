@@ -8,8 +8,6 @@ general:
 machine:
   java:
     version: openjdk8
-  environment:
-    GOPATH: "${HOME}/flights-history-service"
 
 #checks out submodules
 # checkout:
@@ -21,7 +19,7 @@ machine:
 # install dependencies
 dependencies:
   override:
-    - go get ./...
+    - go get -v -t -d ./...
 
 # compiles the application and run flights-history-service container to execute automation tests
 compile:
