@@ -27,7 +27,6 @@ dependencies:
 compile:
   override:
     - ls
-    - go install && go build main.go
     - go run main.go:
         background: true
     - sleep 20
