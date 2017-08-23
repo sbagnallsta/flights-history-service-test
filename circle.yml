@@ -1,25 +1,39 @@
+# sets the triggers for a specific branch
 general:
   branches:
     only:
       - master
 
+# sets the CircleCI virtual machine to use go and Docker services
 machine:
   java:
     version: openjdk8
   environment:
     GOPATH: "${HOME}/flights-history-service"
 
+#checks out submodules
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
+    - git submodule update --remote --merge
+
+# install dependencies
 dependencies:
   override:
-    - go get ./..
+    - go get ./...
 
-compile: 
+# compiles the application and run flights-history-service container to execute automation tests
+compile:
   override:
     - cd src/main/ && go install && go build main.go
     - cd src/main/ && go run main.go:
-      background: true
+        background: true
+    - sleep 20
 
+# run tests
 test:
   override:
+    - go test -v -race ./src/main/...
+    - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
     - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
-
