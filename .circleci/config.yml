@@ -52,7 +52,7 @@ jobs:
       - attach_workspace:
           at: shared-workspace
 
-     - run:
+      - run:
           name: Run Code
           command: |
             cp -r shared-workspace/profiles/ .
