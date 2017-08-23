@@ -15,12 +15,43 @@ public class PropertiesConfig {
     @Value("${flights.history.service.url}")
     private String hostUrl;
 	
+    @Value("${mongodb.host}")
+    private String mongoUrl;
+    
+    @Value("${mongodb.databaseName}")
+    private String mongoDatabaseName;
+    
+    @Value("${mongodb.collectionName}")
+    private String mongoCollectionName;
+  
     /**
      * 
      * @return the flights history service health check endpoint
      */
-	public String getHostUrl() {
+    public String getHostUrl() {
         return hostUrl;
+    }
+    
+    /**
+     * 
+     * @return the url for the mongo db
+     */
+    public String getMongoUrl() {
+        return mongoUrl;
+    }
+
+    /**
+     * @return the mongoDatabaseName
+     */
+    public String getMongoDatabaseName() {
+        return mongoDatabaseName;
+    }
+
+    /**
+     * @return the mongoCollectionName
+     */
+    public String getMongoCollectionName() {
+        return mongoCollectionName;
     }
 
     /* (non-Javadoc)
@@ -28,7 +59,8 @@ public class PropertiesConfig {
      */
     @Override
     public String toString() {
-        return "PropertiesConfig [hostUrl=" + hostUrl + "]";
+        return "PropertiesConfig [hostUrl=" + hostUrl + ", mongoUrl=" + mongoUrl + ", mongoDatabaseName="
+                + mongoDatabaseName + ", mongoCollectionName=" + mongoCollectionName + "]";
     }
-  
+
 }

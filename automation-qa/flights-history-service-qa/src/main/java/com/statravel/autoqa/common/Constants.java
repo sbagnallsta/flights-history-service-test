@@ -7,7 +7,8 @@ package com.statravel.autoqa.common;
 public final class Constants {
 
     // ----------------------------------------- Resources -----------------------------------------
-    public static final String HEALTH_RESOURCE = "health/";
+    public static final String HEALTH_RESOURCE = "health";
+    public static final String FLIGHTS_RESOURCE = "flights";
 
     /**
      * 

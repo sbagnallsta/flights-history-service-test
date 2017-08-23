@@ -38,7 +38,7 @@ public class RestUtils {
      * 
      * @return object parsed
      */
-    public <T> T parseResponseBody(final com.statravel.autoqa.domain.payload.service.history.Response response, final Class<T> valueType) {
+    public <T> T parseResponseBody(final com.statravel.autoqa.domain.dto.response.Response response, final Class<T> valueType) {
 
         ObjectMapper mapper = new ObjectMapper();
 

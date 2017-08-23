@@ -34,6 +34,5 @@ compile:
 # run tests
 test:
   override:
-    - go test -v -race ./src/main/...
     - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
     - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
