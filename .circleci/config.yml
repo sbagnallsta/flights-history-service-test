@@ -44,7 +44,6 @@ jobs:
       - image: mongo:3.4.4
 
     steps:
-      - setup_tests
       - attach_workspace:
           at: shared-workspace
       - run:
