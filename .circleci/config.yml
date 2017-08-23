@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: Compile Code
-          command: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o workdir/main .
+          command: go build main.go
 
       - run:
           name: Create Workspace
@@ -33,7 +33,7 @@ jobs:
              mkdir -p shared-workspace
              cp -r automation-qa/flights-history-service-qa/ shared-workspace/
              cp -r profiles/ shared-workspace/
-             cp -r workdir/main shared-workspace/
+             cp -r main shared-workspace/
 
       - persist_to_workspace:
           root: shared-workspace
@@ -55,7 +55,7 @@ jobs:
           name: Run Code
           command: |
             cp -r shared-workspace/profiles/ .
-            main
+            main.exe
             background: true
 
       - run: 
