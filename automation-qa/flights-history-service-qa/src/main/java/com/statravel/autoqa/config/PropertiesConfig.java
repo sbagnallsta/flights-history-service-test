@@ -14,15 +14,6 @@ public class PropertiesConfig {
     
     @Value("${flights.history.service.url}")
     private String hostUrl;
-	
-    @Value("${mongodb.host}")
-    private String mongoUrl;
-    
-    @Value("${mongodb.database}")
-    private String mongoDatabase;
-    
-    @Value("${mongodb.collection}")
-    private String mongoCollection;
   
     /**
      * 
@@ -32,35 +23,5 @@ public class PropertiesConfig {
         return hostUrl;
     }
     
-    /**
-     * 
-     * @return the url for the mongo db
-     */
-    public String getMongoUrl() {
-        return mongoUrl;
-    }
-
-    /**
-     * @return the mongoDatabaseName
-     */
-    public String getMongoDatabase() {
-        return mongoDatabase;
-    }
-
-    /**
-     * @return the mongoCollectionName
-     */
-    public String getMongoCollection() {
-        return mongoCollection;
-    }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "PropertiesConfig [hostUrl=" + hostUrl + ", mongoUrl=" + mongoUrl + ", mongoDatabase="
-                + mongoDatabase + ", mongoCollection=" + mongoCollection + "]";
-    }
 
 }

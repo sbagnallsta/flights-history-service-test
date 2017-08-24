@@ -3,12 +3,21 @@
  */
 package com.statravel.autoqa.domain.dto.payload;
 
+import java.io.Serializable;
+
 /**
  * @author STA Development Team
  *
  */
-public class Segment {
+public class Segment implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3865662985428955579L;
+    
+    private static final int PRIME_NUMBER = 31;
+    
     private String leaveDate;
     private String arriveDate;
     private String origin;
@@ -167,6 +176,103 @@ public class Segment {
      */
     public void setAircraft(final String aircraft) {
         this.aircraft = aircraft;
+    }
+    
+    
+    
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = PRIME_NUMBER;
+        int result = 1;
+        result = prime * result + ((aircraft == null) ? 0 : aircraft.hashCode());
+        result = prime * result + ((arriveDate == null) ? 0 : arriveDate.hashCode());
+        result = prime * result + ((cabin == null) ? 0 : cabin.hashCode());
+        result = prime * result + ((cabinCode == null) ? 0 : cabinCode.hashCode());
+        result = prime * result + ((destination == null) ? 0 : destination.hashCode());
+        result = prime * result + ((flightNumber == null) ? 0 : flightNumber.hashCode());
+        result = prime * result + ((leaveDate == null) ? 0 : leaveDate.hashCode());
+        result = prime * result + ((markAirline == null) ? 0 : markAirline.hashCode());
+        result = prime * result + ((opAirline == null) ? 0 : opAirline.hashCode());
+        result = prime * result + ((origin == null) ? 0 : origin.hashCode());
+        return result;
+    }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Segment other = (Segment) obj;
+        if (aircraft == null) {
+            if (other.aircraft != null)
+                return false;
+        } else if (!aircraft.equals(other.aircraft))
+            return false;
+        if (arriveDate == null) {
+            if (other.arriveDate != null)
+                return false;
+        } else if (!arriveDate.equals(other.arriveDate))
+            return false;
+        if (cabin == null) {
+            if (other.cabin != null)
+                return false;
+        } else if (!cabin.equals(other.cabin))
+            return false;
+        if (cabinCode == null) {
+            if (other.cabinCode != null)
+                return false;
+        } else if (!cabinCode.equals(other.cabinCode))
+            return false;
+        if (destination == null) {
+            if (other.destination != null)
+                return false;
+        } else if (!destination.equals(other.destination))
+            return false;
+        if (flightNumber == null) {
+            if (other.flightNumber != null)
+                return false;
+        } else if (!flightNumber.equals(other.flightNumber))
+            return false;
+        if (leaveDate == null) {
+            if (other.leaveDate != null)
+                return false;
+        } else if (!leaveDate.equals(other.leaveDate))
+            return false;
+        if (markAirline == null) {
+            if (other.markAirline != null)
+                return false;
+        } else if (!markAirline.equals(other.markAirline))
+            return false;
+        if (opAirline == null) {
+            if (other.opAirline != null)
+                return false;
+        } else if (!opAirline.equals(other.opAirline))
+            return false;
+        if (origin == null) {
+            if (other.origin != null)
+                return false;
+        } else if (!origin.equals(other.origin))
+            return false;
+        return true;
+    }
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Segment [leaveDate=" + leaveDate + ", arriveDate=" + arriveDate + ", origin=" + origin + ", destination=" + destination + ", cabin="
+                + cabin + ", cabinCode=" + cabinCode + ", flightNumber=" + flightNumber + ", markAirline=" + markAirline + ", opAirline=" + opAirline
+                + ", aircraft=" + aircraft + "]";
     }    
     
     

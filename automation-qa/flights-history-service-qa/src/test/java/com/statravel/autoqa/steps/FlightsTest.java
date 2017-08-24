@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.statravel.autoqa.common.Constants;
 import com.statravel.autoqa.common.RestUtils;
 import com.statravel.autoqa.common.TestUtils;
 import com.statravel.autoqa.config.PropertiesConfig;
 import com.statravel.autoqa.domain.dto.payload.Flight;
+import com.statravel.autoqa.repository.FlightHistoryRepository;
 import com.statravel.autoqa.runner.CucumberStepsDefinition;
 
 import cucumber.api.java.en.Given;
@@ -44,6 +40,9 @@ public class FlightsTest {
     private com.jayway.restassured.response.Response response;
     
     private List<Flight> flightsAdded = new ArrayList<>();
+    
+    @Autowired
+    private FlightHistoryRepository flightHistoryRepository;
             
     /**
     *
@@ -82,17 +81,14 @@ public class FlightsTest {
         
         Boolean stored = false;
         
-        MongoClient mongoClient = new MongoClient(propertiesConfig.getMongoUrl(), 27017);
-        MongoDatabase mongoDatabase = mongoClient.getDatabase(propertiesConfig.getMongoDatabase());
-        MongoCollection<Document> document = mongoDatabase.getCollection(propertiesConfig.getMongoCollection());        
-        FindIterable<Document> iterable = document.find();
+        List<Flight> flights = flightHistoryRepository.findAll();
         
         for (Iterator<Flight> i = this.flightsAdded.iterator(); i.hasNext();) {
             Flight flight = i.next();
             
-            for (Document current : iterable) {
-                String pos = current.getString(TestUtils.POS);
-                Boolean manual = current.getBoolean(TestUtils.MANUAL);
+            for (Flight current : flights) {
+                String pos = current.getPos();
+                Boolean manual = current.isManual();
                 
                 if ((flight.getPos().equals(pos)) && (flight.isManual().equals(manual))) {
                     
@@ -104,9 +100,7 @@ public class FlightsTest {
             
             assertThat(true).isEqualTo(stored);
         }
-        
-        mongoClient.close();
-           
+                   
     }
 
     /**
