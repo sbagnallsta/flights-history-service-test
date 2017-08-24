@@ -3,6 +3,6 @@
 	"DataSource" : {
 		"Url": "192.168.56.101:27017",
 		"Database": "flights",
-		"Collection":"flightsHistory"
+		"Collection":"history"
 	}
 }

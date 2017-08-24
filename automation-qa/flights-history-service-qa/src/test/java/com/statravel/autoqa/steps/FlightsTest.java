@@ -13,7 +13,7 @@ import com.statravel.autoqa.common.RestUtils;
 import com.statravel.autoqa.common.TestUtils;
 import com.statravel.autoqa.config.PropertiesConfig;
 import com.statravel.autoqa.domain.dto.payload.Flight;
-import com.statravel.autoqa.repository.FlightHistoryRepository;
+import com.statravel.autoqa.repository.FlightsRepository;
 import com.statravel.autoqa.runner.CucumberStepsDefinition;
 
 import cucumber.api.java.en.Given;
@@ -32,6 +32,9 @@ public class FlightsTest {
 
     @Autowired
     private PropertiesConfig propertiesConfig;
+    
+    @Autowired
+    private FlightsRepository flightsRepository;
       
     private TestUtils testUtils = new TestUtils();
     
@@ -40,10 +43,7 @@ public class FlightsTest {
     private com.jayway.restassured.response.Response response;
     
     private List<Flight> flightsAdded = new ArrayList<>();
-    
-    @Autowired
-    private FlightHistoryRepository flightHistoryRepository;
-            
+                
     /**
     *
     */
@@ -81,7 +81,7 @@ public class FlightsTest {
         
         Boolean stored = false;
         
-        List<Flight> flights = flightHistoryRepository.findAll();
+        List<Flight> flights = flightsRepository.findAll();
         
         for (Iterator<Flight> i = this.flightsAdded.iterator(); i.hasNext();) {
             Flight flight = i.next();

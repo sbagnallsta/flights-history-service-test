@@ -151,7 +151,7 @@ public class Fare implements Serializable {
      */
     @Override
     public int hashCode() {
-        final int prime = PRIME_NUMBER;
+        final int prime = 31;
         int result = 1;
         result = prime * result + ((bookingFees == null) ? 0 : bookingFees.hashCode());
         result = prime * result + ((currency == null) ? 0 : currency.hashCode());

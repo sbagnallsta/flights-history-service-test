@@ -3,6 +3,6 @@
 	"DataSource" : {
 		"Url": "localhost:27017",
 		"Database": "flights",
-		"Collection":"flightsHistory"
+		"Collection":"history"
 	}
 }

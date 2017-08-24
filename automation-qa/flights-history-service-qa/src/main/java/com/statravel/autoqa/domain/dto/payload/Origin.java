@@ -64,7 +64,7 @@ public class Origin implements Serializable {
      */
     @Override
     public int hashCode() {
-        final int prime = PRIME_NUMBER;
+        final int prime = 31;
         int result = 1;
         result = prime * result + ((city == null) ? 0 : city.hashCode());
         result = prime * result + ((iata == null) ? 0 : iata.hashCode());
