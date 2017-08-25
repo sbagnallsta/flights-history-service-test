@@ -1,9 +1,5 @@
 # GO CircleCI 1.0 configuration file
-dependencies:
-  override:
-  # Remove cached Go sources
-  - rm -rf $HOME/.go_workspace
-  
+
 # sets the triggers for a specific branch
 general:
   branches:
