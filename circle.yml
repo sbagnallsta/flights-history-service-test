@@ -1,5 +1,9 @@
 # GO CircleCI 1.0 configuration file
-
+dependencies:
+  override:
+  # Remove cached Go sources
+  - rm -rf $HOME/.go_workspace
+  
 # sets the triggers for a specific branch
 general:
   branches:
@@ -12,6 +16,12 @@ machine:
     version: openjdk8
   services:
     - docker
+   environment:
+    # GOROOT is not set by default
+    GOROOT: ""
+    GOPATH: "${HOME}/.go_project"
+    PATH: "${GOPATH}/bin:${PATH}"
+    BUILD_PATH: "${GOPATH}/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
 
 #checks out submodules
 # checkout:
@@ -23,7 +33,16 @@ machine:
 # install dependencies
 dependencies:
   override:
-    - go get -v -t -d ./...
+    - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
+    - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
+
+test:
+  pre:
+    - cd $BUILD_PATH && go vet $(go list ./... | grep -v /vendor/)
+  override:
+    - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
+
+
 
 # compiles the application and run email-service container to execute automation tests
 # compile:
