@@ -35,15 +35,16 @@ dependencies:
 #     - git submodule update --remote --merge
 
 # install dependencies
-dependencies:
-  override:
-    - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
-    - mv flights-history-service-test/profiles  ~/.go_project/src/github.com/
-    - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
+# dependencies:
+#   override:
+#     - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
+#     - cp -r flights-history-service-test/profiles/  ~/.go_project/src/github.com/
+#     - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
 
 test:
   pre:
     - cd $BUILD_PATH && go get -v -t -d ./...
+    - cd $BUILD_PATH && go test ./...
   # override:
   #   - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
 
