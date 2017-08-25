@@ -12,6 +12,8 @@ machine:
     version: openjdk8
   services:
     - docker
+  environment:
+    GOPATH: "${HOME}/flights-history-service-test"
 
 test:
   pre:
