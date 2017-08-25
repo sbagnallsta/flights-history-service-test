@@ -38,7 +38,7 @@ dependencies:
 dependencies:
   override:
     - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
-    - mv /flights-history-service/profiles  ~/.go_project/src/github.com/
+    - mv flights-history-service-test/profiles  ~/.go_project/src/github.com/
     - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
 
 test:
