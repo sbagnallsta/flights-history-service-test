@@ -34,9 +34,9 @@ dependencies:
 
 test:
   pre:
-    - cd $BUILD_PATH && go vet $(go list ./... | grep -v /vendor/)
-  override:
-    - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
+    - cd $BUILD_PATH && go get -v -t -d ./...
+  # override:
+  #   - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
 
 
 
