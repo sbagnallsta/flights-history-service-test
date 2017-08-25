@@ -26,54 +26,9 @@ dependencies:
     - |
       echo 'export GOPATH=$GOPATH:$HOME/.go_project' >> ~/.circlerc
 
-
-#checks out submodules
-# checkout:
-#   post:
-#     - git submodule sync
-#     - git submodule update --init
-#     - git submodule update --remote --merge
-
-# install dependencies
-# dependencies:
-#   override:
-#     - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
-#     - cp -r flights-history-service-test/profiles/  ~/.go_project/src/github.com/
-#     - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
-
 test:
   pre:
+    - cp -r /flights-history-service/profiles  ~/.go_project/src/github.com/
     - cd $BUILD_PATH && go get -v -t -d ./...
-    - cd $BUILD_PATH && go test ./...
   # override:
   #   - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
-
-
-
-# compiles the application and run email-service container to execute automation tests
-# compile:
-#   override:
-#     - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o workdir/main . 
-#     - docker build -t "statravel/flights-history-service:$(/bin/bash shared-workspace/docker-image-tag.sh $DOCKER_USER $DOCKER_PASSWORD flights-history-service 1)" .
-
-# #run tests
-# test:
-#   override:
-#     - go run main.go:
-#         background: true
-#     - sleep 5
-#     - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
-#     - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
-
-# deployment:
-#   staging:
-#     branch: staging
-#     commands:
-#       - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
-#       - docker push "statravel/flights-history-service:$(/bin/bash shared-workspace/docker-image-tag.sh $DOCKER_USER $DOCKER_PASSWORD flights-history-service 1)"
-
-# deployment:
-#   staging:
-#     branch: master
-#     commands:
-#       - curl -H "Authorization:Token $WORKFLOW_CONTROLLER_API_TOKEN" -H "Content-Type:application/json" -X POST $WORKFLOW_CONTROLLER_API_DEPLOY_APP_URL -d '{"image":"statravel/flights-history-service:'$(/bin/bash ./docker-image-tag.sh $DOCKER_USER $DOCKER_PASSWORD latest)'"}'
