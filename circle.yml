@@ -15,7 +15,7 @@ machine:
 
 test:
   pre:
-    - cp -r /flights-history-service-test/profiles  ~/.go_project/src/github.com/
+    - cp -r flights-history-service-test/profiles  ~/.go_project/src/github.com/
     - go get -v -t -d ./...
   # override:
   #   - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
