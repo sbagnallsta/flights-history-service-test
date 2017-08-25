@@ -15,9 +15,17 @@ machine:
   environment:
     # GOROOT is not set by default
     GOROOT: ""
-    GOPATH: "${HOME}/.go_project"
+    GOPATH: "${HOME}/flights-history-service-test"
     PATH: "${GOPATH}/bin:${PATH}"
     BUILD_PATH: "${GOPATH}/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+
+dependencies:
+  override:
+    - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME
+    - ln -fs $HOME/$CIRCLE_PROJECT_REPONAME $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+    - |
+      echo 'export GOPATH=$GOPATH:$HOME/.go_project' >> ~/.circlerc
+
 
 #checks out submodules
 # checkout:
@@ -30,6 +38,7 @@ machine:
 dependencies:
   override:
     - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
+    - mv /flights-history-service/profiles  ~/.go_project/src/github.com/
     - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${BUILD_PATH}
 
 test:
