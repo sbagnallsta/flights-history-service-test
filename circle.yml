@@ -9,7 +9,7 @@ machine:
   java:
     version: openjdk8
   environment:
-    GOPATH: "${HOME}/flights-history-service-test"
+    working_directory: /go/src/github.com/sta-travel/flights-history-service-test
 
 #checks out submodules
 # checkout:
