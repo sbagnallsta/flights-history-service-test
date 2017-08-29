@@ -1,40 +1,22 @@
-# # GO CircleCI 1.0 configuration file
+# GO CircleCI 1.0 configuration file
 
-# # sets the triggers for a specific branch
-# general:
-#   branches:
-#     only:
-#       - master
+# sets the triggers for a specific branch
+general:
+  branches:
+    only:
+      - master
 
-# # sets the CircleCI virtual machine to use go and Docker services
-# machine:
-#   java:
-#     version: openjdk8
-#   services:
-#     - docker
-#   environment:
-#     GOPATH: "${HOME}/flights-history-service-test"
-
-# test:
-#   pre:
-#     - go get -v -t -d ./...
-#   # override:
-#   #   - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
+# sets the CircleCI virtual machine to use go and Docker services
 machine:
+  java:
+    version: openjdk8
+  services:
+    - docker
   environment:
-    IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-
-dependencies:
-  pre:
-    - go get github.com/tools/godep
-
-  override:
-    - mkdir -p "$GOPATH/src/$IMPORT_PATH"
-    - rsync -azC --delete ./ "$GOPATH/src/$IMPORT_PATH/"
+    GOPATH: "${HOME}/flights-history-service-test"
 
 test:
   pre:
-    - go vet ./...
-
-  override:
-    - godep go test ./...
+    - go get -v -t -d ./...
+  # override:
+  #   - cd $BUILD_PATH && godep go test -v -race $(go list ./... | grep -v /vendor/)
