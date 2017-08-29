@@ -10,6 +10,8 @@ general:
 machine:
   java:
     version: openjdk8
+  environment:
+    GOPATH: "${HOME}/flights-history-service-test"
   services:
     - docker
 
