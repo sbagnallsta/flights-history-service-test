@@ -1,9 +1,0 @@
-target/
-.settings/
-.classpath
-.checkstyle
-.project
-.factorypath
-.springBeans
-/.apt_generated/
-bin/

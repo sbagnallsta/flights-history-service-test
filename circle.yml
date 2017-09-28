@@ -1,3 +1,5 @@
+# GO CircleCI 1.0 configuration file
+
 # sets the triggers for a specific branch
 general:
   branches:
@@ -11,27 +13,45 @@ machine:
   environment:
     GOPATH: "${HOME}/flights-history-service"
     working_directory: /go/src/github.com/sta-travel/flights-history-service-test
+  services:
+    - docker
 
 #checks out submodules
-# checkout:
-#   post:
-#     - git submodule sync
-#     - git submodule update --init
-#     - git submodule update --remote --merge
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
+    - git submodule update --remote --merge
 
 # install dependencies
 dependencies:
   override:
     - go get -v -t -d ./...
 
-# compiles the application and run flights-history-service container to execute automation tests
+# compiles the application and run email-service container to execute automation tests
 compile:
+  override:
+    - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o workdir/main . 
+    # - docker build -t "statravel/flights-history-service:$(/bin/bash shared-workspace/docker-image-tag.sh $DOCKER_USER $DOCKER_PASSWORD flights-history-service 1)" .
+
+#run tests
+test:
   override:
     - go run main.go:
         background: true
+    - sleep 5
+    - cd automation && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
+    - cd automation && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
 
-# run tests
-test:
-  override:
-    - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @sanity"
-    - cd automation-qa/flights-history-service-qa/ && mvn clean test -DargLine="-Dspring.profiles.active=ci" -Dcucumber.options="--tags @smoke"
+# deployment:
+#   staging:
+#     branch: staging
+#     commands:
+#       - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+#       - docker push "statravel/flights-history-service:$(/bin/bash shared-workspace/docker-image-tag.sh $DOCKER_USER $DOCKER_PASSWORD flights-history-service 1)"
+
+# deployment:
+#   staging:
+#     branch: master
+#     commands:
+#       - curl -H "Authorization:Token $WORKFLOW_CONTROLLER_API_TOKEN" -H "Content-Type:application/json" -X POST $WORKFLOW_CONTROLLER_API_DEPLOY_APP_URL -d '{"image":"statravel/flights-history-service:'$(/bin/bash ./docker-image-tag.sh $DOCKER_USER $DOCKER_PASSWORD latest)'"}'

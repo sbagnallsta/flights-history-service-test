@@ -1,9 +1,0 @@
-target/
-
-.apt_generated
-.classpath
-.project
-.bin/
-.idea/
-.settings
-

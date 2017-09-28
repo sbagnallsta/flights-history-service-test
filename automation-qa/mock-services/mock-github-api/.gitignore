@@ -1,9 +1,0 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
-bin/
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
